@@ -53,7 +53,8 @@ class _BackdropPageState extends State<BackdropPage>
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
-        title: Text("Eneagrama"),
+        title: Text("Eneagrama",
+          style: new TextStyle(fontSize: 24.0),),
         centerTitle: true,
         leading: IconButton(
           onPressed: () {

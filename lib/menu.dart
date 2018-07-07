@@ -10,6 +10,7 @@ class MenuPage extends StatelessWidget {
       );
 
       return new Container(
+        height: 70.0,
         child: new Text(
           text,
           style: tStyle,
@@ -19,19 +20,27 @@ class MenuPage extends StatelessWidget {
     }
 
     return new Container(
-
-        child: new Center(
-      child: new Column(
-        children: <Widget>[
-          new Image.network(
-            "http://www.madanesschool.com/resources/ENEAGRAMA%20SYMBOL%20HQ%20transparencia%20full%20de%20logo%20frnando.png?timestamp=1393223535485",
-            height: 250.0,
-          ),
-          ItemMenu("Información"),
-          ItemMenu("Resultado"),
-          ItemMenu("Histórico"),
-        ],
+      child: new Center(
+        child: new Column(
+          children: <Widget>[
+            new Image.network(
+              "http://www.madanesschool.com/resources/ENEAGRAMA%20SYMBOL%20HQ%20transparencia%20full%20de%20logo%20frnando.png?timestamp=1393223535485",
+              height: 250.0,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(30.0),
+              child: new Column(
+                children: <Widget>[
+                  ItemMenu("Información"),
+                  ItemMenu("Eneatipos"),
+                  ItemMenu("Resultado"),
+                  ItemMenu("Histórico"),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
-    ));
+    );
   }
 }

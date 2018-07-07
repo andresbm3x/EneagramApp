@@ -46,9 +46,6 @@ class _TwoPanelsState extends State<TwoPanels> {
                   topLeft: new Radius.circular(16.0)),
               child: new Column(
                 children: <Widget>[
-                  new Container(
-                    height: header_height,
-                  ),
                   new InfoPage(),
                 ],
               ),
