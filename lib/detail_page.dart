@@ -52,9 +52,8 @@ class DetailPage extends StatelessWidget {
                       borderRadius: new BorderRadius.circular(19.0),
                       boxShadow: <BoxShadow>[
                         new BoxShadow(
-                          color: Colors.black12,
-                          blurRadius: 10.0,
-                          offset: new Offset(0.0, 10.0),
+                          color: Colors.black,
+                          blurRadius: 5.0,
                         )
                       ]),
                 ),

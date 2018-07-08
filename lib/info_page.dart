@@ -16,7 +16,6 @@ class Eneatipo {
 }
 
 class InfoPage extends StatelessWidget {
-
   Widget eneatipoCard(Eneatipo tipo, BuildContext context) {
     return new GestureDetector(
       onTap: () => onTapCard(tipo, context),
@@ -37,7 +36,8 @@ class InfoPage extends StatelessWidget {
         child: Padding(
           padding: new EdgeInsets.all(18.0),
           child: new Row(children: <Widget>[
-            Hero(tag: tipo.title,
+            Hero(
+              tag: tipo.title,
               child: new Container(
                 height: 100.0,
                 width: 60.0,
@@ -66,34 +66,36 @@ class InfoPage extends StatelessWidget {
   }
 
   void onTapCard(Eneatipo eneatipo, BuildContext context) {
-    Navigator.of(context).push( MaterialPageRoute<Null>(
-        builder: (context) => DetailPage(eneatipo)));
+    Navigator.of(context).push(
+        MaterialPageRoute<Null>(builder: (context) => DetailPage(eneatipo)));
   }
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(0.0, 32.0, 0.0, 0.0),
-          child:
-          new StreamBuilder(
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(0.0, 32.0, 0.0, 0.0),
+        child: new StreamBuilder(
             stream: Firestore.instance.collection('eneatipos').snapshots(),
-            builder: (context,snapshot){
-              if (!snapshot.hasData) return const Text("Cargando..");
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) return Text("Cargando..",style: new TextStyle(color: Colors.black));
               return new ListView.builder(
-                itemCount: snapshot.data.documents.length,
-                  itemBuilder: (context,index){
+                  itemCount: snapshot.data.documents.length,
+                  itemBuilder: (context, index) {
                     DocumentSnapshot ds = snapshot.data.documents[index];
-                    return eneatipoCard(
-                        Eneatipo(index, "${ds['name']}", "${ds['description']}",
-                            new Color.fromARGB(255, 150, 28, 130)),
-                        context);
-                  }
-              );
-            }
 
-          ),
-        ),
+                    return eneatipoCard(
+                        Eneatipo(
+                            index,
+                            "${ds['name']}",
+                            "${ds['description']}",
+                            new Color(int.parse(ds['color'].substring(1, 7),
+                                    radix: 16) +
+                                0xFF000000)),
+                        context);
+                  });
+            }),
+      ),
     );
   }
 }
