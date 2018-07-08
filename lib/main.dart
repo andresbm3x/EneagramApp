@@ -13,10 +13,13 @@ class MyApp extends StatelessWidget {
         theme: new ThemeData(
           brightness: Brightness.light,
           primarySwatch: Colors.deepPurple,
+          textTheme: TextTheme(
+            title: new TextStyle(color: Colors.white, fontSize: 26.0),
+            body1: new TextStyle(color: Colors.white, fontSize: 16.0),
+            subhead: new TextStyle(color: Colors.white, fontSize: 22.0),
+          ),
         ),
-        // ignore: strong_mode_invalid_cast_new_expr
-        home: new BackdropPage()
-    );
+        home: new BackdropPage());
   }
 }
 
@@ -53,8 +56,10 @@ class _BackdropPageState extends State<BackdropPage>
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
-        title: Text("Eneagrama",
-          style: new TextStyle(fontSize: 24.0),),
+        title: Text(
+          "Eneagrama",
+          style: Theme.of(context).textTheme.title,
+        ),
         centerTitle: true,
         leading: IconButton(
           onPressed: () {
@@ -66,7 +71,9 @@ class _BackdropPageState extends State<BackdropPage>
           ),
         ),
       ),
-      body: new TwoPanels(controller: this._controller,),
+      body: new TwoPanels(
+        controller: this._controller,
+      ),
     );
   }
 }

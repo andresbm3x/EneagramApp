@@ -1,5 +1,6 @@
 import 'package:eneatipos_test/info_page.dart';
 import 'package:eneatipos_test/menu.dart';
+import 'package:eneatipos_test/test_page.dart';
 import 'package:flutter/material.dart';
 
 class TwoPanels extends StatefulWidget {
@@ -46,7 +47,7 @@ class _TwoPanelsState extends State<TwoPanels> {
                   topLeft: new Radius.circular(16.0)),
               child: new Column(
                 children: <Widget>[
-                  new InfoPage(),
+                  new TestPage(),
                 ],
               ),
             ),
