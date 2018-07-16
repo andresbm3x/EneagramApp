@@ -1,65 +1,91 @@
 import 'package:flutter/material.dart';
 
-class MenuPage extends StatelessWidget {
+class MenuItem {
+  final String id;
+  final String title;
+  final IconData icon;
 
-  static const IconData defIcon=Icons.info;
+  const MenuItem({this.id, this.title, this.icon});
+}
+
+const List<MenuItem> allMenuItems = const <MenuItem>[
+  const MenuItem(
+    id: "info",
+    title: "Información",
+  ),
+  const MenuItem(
+    id: "test",
+    title: "Test Eneagrama",
+  ),
+  const MenuItem(
+    id: "infoEne",
+    title: "Información Eneatipos",
+  ),
+  const MenuItem(
+    id: "config",
+    title: "Configuración",
+  ),
+];
+
+class MenuPage extends StatefulWidget {
+  static const IconData defIcon = Icons.info;
+
+  final Function onMenuItemSelected;
+
+  MenuPage({this.onMenuItemSelected});
+
+  @override
+  _MenuPageState createState() => _MenuPageState();
+}
+
+class _MenuPageState extends State<MenuPage> {
+  MenuItem _currMenuItem = allMenuItems[0];
+
+  void _changeMenuItem(MenuItem item){
+    setState(() {
+      _currMenuItem=item;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    Widget ItemMenu(String text,VoidCallback onTapItem,{IconData icon=defIcon}) {
-      return GestureDetector(
-        onTap: onTapItem,
-        child: new Container(
-          margin: new EdgeInsets.all(8.0),
-          height: 45.0,
-          //decoration: BoxDecoration(color: Colors.green),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              new Icon(icon,color: Colors.white,),
-              Container(
-                margin: EdgeInsets.only(left:20.0,top: 0.0,right: 0.0,bottom: 0.0),
-                alignment: AlignmentDirectional(0.0, 0.0),
-                child: new Text(
-                  text,
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.subhead,
-                ),
-              ),
-            ],
-          ),
-          padding: new EdgeInsets.all(12.0),
+    final List<Widget>  menuItems = allMenuItems.map<Widget>((MenuItem item){
+      final bool selected = item==_currMenuItem;
+      return new Material(
+        shape: const RoundedRectangleBorder(
+          borderRadius: const BorderRadius.all(const Radius.circular(4.0)),
+        ),
+        color: selected
+            ? Colors.white.withOpacity(0.25)
+            : Colors.transparent,
+        child: new ListTile(
+          title: new Text(item.title),
+          selected: selected,
+          onTap: () {
+            widget.onMenuItemSelected(item.id);
+            _changeMenuItem(item);
+          },
         ),
       );
-    }
+    }  ).toList();
 
     return new Container(
       child: new Center(
-        child: new Column(
-          children: <Widget>[
-            new Image.network(
-              "http://www.madanesschool.com/resources/ENEAGRAMA%20SYMBOL%20HQ%20transparencia%20full%20de%20logo%20frnando.png?timestamp=1393223535485",
-              height: 250.0,
+        child: new Column(children: <Widget>[
+          new Image.network(
+            "http://www.madanesschool.com/resources/ENEAGRAMA%20SYMBOL%20HQ%20transparencia%20full%20de%20logo%20frnando.png?timestamp=1393223535485",
+            height: 150.0,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(30.0),
+            child: Column(
+              children: menuItems,
             ),
-            Padding(
-              padding: const EdgeInsets.all(30.0),
-              child: new Column(
-                children: <Widget>[
-                  ItemMenu("Información",(){
-
-                  }),
-                  ItemMenu("Información Eneatipos",(){
-
-                  }),
-                  ItemMenu("Test de Eneagrama",(){
-
-                  }),
-                ],
-              ),
-            ),
-          ],
-        ),
+          ),
+        ]),
       ),
     );
   }
 }
+
+
