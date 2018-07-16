@@ -1,4 +1,4 @@
-import 'package:eneatipos_test/detail_page.dart';
+import 'package:eneatipos_test/detail_eneagram_page.dart';
 import 'package:eneatipos_test/eneagram_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -17,7 +17,7 @@ class Eneatipo {
 }
 
 final EneagramScreen infoEneagramas = new EneagramScreen(
-  title: "Información",
+  title: "Eneagramas",
   builder: (BuildContext context) {
     return InfoEneagramas();
   },
@@ -95,7 +95,7 @@ class InfoEneagramas extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
+    return Container(
       child: Padding(
         padding: const EdgeInsets.fromLTRB(0.0, 32.0, 0.0, 0.0),
         child: new StreamBuilder(

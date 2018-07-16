@@ -1,4 +1,4 @@
-import 'package:eneatipos_test/info_page.dart';
+import 'package:eneatipos_test/info_eneagram_page.dart';
 import 'package:flutter/material.dart';
 
 class DetailPage extends StatelessWidget {

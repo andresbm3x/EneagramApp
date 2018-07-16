@@ -1,13 +1,24 @@
 import 'package:eneatipos_test/backdrop.dart';
+import 'package:eneatipos_test/info_eneagram_page.dart';
+import 'package:eneatipos_test/info_page.dart';
 import 'package:eneatipos_test/menu.dart';
 import 'package:flutter/material.dart';
 
-class EneagramApp extends StatelessWidget {
+class EneagramApp extends StatefulWidget {
+  @override
+  _EneagramAppState createState() => _EneagramAppState();
+}
+
+class _EneagramAppState extends State<EneagramApp> {
+  var activeScreen = infoScreen;
   @override
   Widget build(BuildContext context) {
+
+
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Eneagrama',
+      title: 'EneagramApp',
       theme: new ThemeData(
         brightness: Brightness.light,
         primarySwatch: Colors.deepPurple,
@@ -18,11 +29,28 @@ class EneagramApp extends StatelessWidget {
         ),
       ),
       home: BackDrop(
-        backPage: Center(
-          child: MenuPage(),
+        title: "Eneagrama",
+        backPage: MenuPage(
+          onMenuItemSelected: (String itemId) {
+            if (activeScreen.title!=itemId)
+            switch (itemId){
+                case "info":
+                  setState(() => activeScreen=infoScreen);
+                  break;
+                case "test":
+                  setState(() => activeScreen=infoScreen);
+                break;
+                case "infoEne":
+                  setState(() => activeScreen=infoEneagramas);
+                break;
+                case "config":
+                  setState(() => activeScreen=infoScreen);
+                break;
+              }
+          },
         ),
+        frontPage: activeScreen,
       ),
     );
   }
 }
-
