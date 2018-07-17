@@ -5,8 +5,9 @@ class BackDrop extends StatefulWidget {
   final String title;
   final Widget backPage;
   final EneagramScreen frontPage;
+  AnimationController controller;
 
-  BackDrop({this.title, this.backPage, this.frontPage});
+  BackDrop({this.title, this.backPage, this.frontPage,this.controller});
 
   @override
   _BackDropState createState() => new _BackDropState();
@@ -15,7 +16,6 @@ class BackDrop extends StatefulWidget {
 class _BackDropState extends State<BackDrop>
     with SingleTickerProviderStateMixin {
   static const _PANEL_HEADER_HEIGHT = 32.0;
-  AnimationController _controller;
 
   Animation<RelativeRect> _getPanelAnimation(BoxConstraints constraints) {
     final double height = constraints.biggest.height;
@@ -24,33 +24,17 @@ class _BackDropState extends State<BackDrop>
     return new RelativeRectTween(
       begin: new RelativeRect.fromLTRB(0.0, top, 0.0, bottom),
       end: new RelativeRect.fromLTRB(0.0, 0.0, 0.0, 0.0),
-    ).animate(new CurvedAnimation(parent: _controller, curve: Curves.linear));
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = new AnimationController(
-      duration: const Duration(milliseconds: 300),
-      value: 1.0,
-      vsync: this,
-    );
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
+    ).animate(new CurvedAnimation(parent: widget.controller, curve: Curves.linear));
   }
 
   bool get _isPanelVisible {
-    final AnimationStatus status = _controller.status;
+    final AnimationStatus status = widget.controller.status;
     return status == AnimationStatus.completed ||
         status == AnimationStatus.forward;
   }
 
   void toggleMenu() {
-    _controller.fling(velocity: _isPanelVisible ? -1.0 : 1.0);
+    widget.controller.fling(velocity: _isPanelVisible ? -1.0 : 1.0);
   }
 
   Widget _backPanel(BuildContext context) {
@@ -65,7 +49,7 @@ class _BackDropState extends State<BackDrop>
           leading: new IconButton(
             icon: new AnimatedIcon(
               icon: AnimatedIcons.close_menu,
-              progress: _controller.view,
+              progress: widget.controller.view,
             ),
             onPressed: () {
               toggleMenu();
@@ -80,11 +64,12 @@ class _BackDropState extends State<BackDrop>
   Widget _frontPane(BuildContext context) {
     return new Material(
       //color: Colors.transparent,
-      elevation: 5.0,
+      elevation: 10.0,
       borderRadius: new BorderRadius.only(
         topRight: new Radius.circular(20.0),
         topLeft: new Radius.circular(20.0),
       ),
+
       child: Center(
         child: widget.frontPage.builder(context),
       ),

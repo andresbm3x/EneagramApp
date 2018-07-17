@@ -9,12 +9,32 @@ class EneagramApp extends StatefulWidget {
   _EneagramAppState createState() => _EneagramAppState();
 }
 
-class _EneagramAppState extends State<EneagramApp> {
+class _EneagramAppState extends State<EneagramApp>
+    with SingleTickerProviderStateMixin {
   var activeScreen = infoScreen;
+  AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = new AnimationController(
+      duration: const Duration(milliseconds: 300),
+      value: 1.0,
+      vsync: this,
+    )..addListener(() => setState(() {}));
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _controller.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-
-
+    final bool _isMenuVisible =
+        _controller.status == AnimationStatus.completed ||
+            _controller.status == AnimationStatus.forward;
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -32,24 +52,27 @@ class _EneagramAppState extends State<EneagramApp> {
         title: "Eneagrama",
         backPage: MenuPage(
           onMenuItemSelected: (String itemId) {
-            if (activeScreen.title!=itemId)
-            switch (itemId){
+            if (activeScreen.title != itemId) {
+              switch (itemId) {
                 case "info":
-                  setState(() => activeScreen=infoScreen);
+                  setState(() => activeScreen = infoScreen);
                   break;
                 case "test":
-                  setState(() => activeScreen=infoScreen);
-                break;
+                  setState(() => activeScreen = infoScreen);
+                  break;
                 case "infoEne":
-                  setState(() => activeScreen=infoEneagramas);
-                break;
+                  setState(() => activeScreen = infoEneagramas);
+                  break;
                 case "config":
-                  setState(() => activeScreen=infoScreen);
-                break;
+                  setState(() => activeScreen = infoScreen);
+                  break;
               }
+            }
+            _controller.fling(velocity: _isMenuVisible ? -1.0 : 1.0);
           },
         ),
         frontPage: activeScreen,
+        controller: _controller,
       ),
     );
   }

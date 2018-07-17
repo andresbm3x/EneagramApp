@@ -49,11 +49,11 @@ class DetailPage extends StatelessWidget {
                   decoration: new BoxDecoration(
                       color: Colors.grey,
                       shape: BoxShape.rectangle,
-                      borderRadius: new BorderRadius.circular(19.0),
+                      borderRadius: new BorderRadius.circular(25.0),
                       boxShadow: <BoxShadow>[
                         new BoxShadow(
                           color: Colors.black,
-                          blurRadius: 5.0,
+                          blurRadius: 25.0,
                         )
                       ]),
                 ),
